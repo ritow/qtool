@@ -30,19 +30,19 @@ function func_logger()
 {
     ## log头，形如：[2012-08-22 11:11:55] ritow-linuxpc
     LogPrefix="`date '+[%Y-%m-%d %T]'` $HOSTNAME "
-    
-	[ "$LOGToStdO" = "yes" ] && { echo -e "${LogPrefix}  $*";return 0;}
 
-	[ -f "${LOGFile}" ] || touch "${LOGFile}"
+    [ "$LOGToStdO" = "yes" ] && { echo -e "${LogPrefix}  $*";return 0;}
+
+    [ -f "${LOGFile}" ] || touch "${LOGFile}"
     [ -f "${LOGFile}" ] || { echo -e "${LogPrefix}  $*";return $LINENO;}
     [ -w "${LOGFile}" ] || { echo -e "${LogPrefix}  $*";return $LINENO;}
-    
-	LineOflog=`wc -l ${LOGFile}|awk '{print $1}'`
-	if [ ${LineOflog} -gt "${LOGMaxLine}" ] ; then
-		sed -i "1,${LOGDelLine} d" ${LOGFile}
-	fi
-	echo -e "${LogPrefix}  $*" >>${LOGFile}
-    
+
+    LineOflog=`wc -l ${LOGFile}|awk '{print $1}'`
+    if [ ${LineOflog} -gt "${LOGMaxLine}" ] ; then
+        sed -i "1,${LOGDelLine} d" ${LOGFile}
+    fi
+    echo -e "${LogPrefix}  $*" >>${LOGFile}
+
     return 0
 }
 ################################################################################
