@@ -1,0 +1,28 @@
+#!/usr/bin/expect -f
+
+## 不使用任何参数，则为当前用户生成sshkey
+## 若带有参数，第一个参数为用户名，并为该用户生成sshkey，此时或者进程启动者为root，或者进程启动者与第一个参数相同
+
+if {$argc == 0} {
+	spawn  ssh-keygen
+} else {
+	set Runner [exec whoami]
+	set user  [lindex $argv 0]
+	if {$Runner != "root" && $Runner != $user} { puts stderr "\tYou must be 'root'";exit 1;}
+	if {$Runner != $user} {spawn su - $user -c ssh-keygen} else { spawn  ssh-keygen}
+}
+
+expect "id_rsa" {
+	send   "\n"
+	expect {
+		"(y/n)?" { send "n\n" }
+		"passphrase" {
+			send "\n"
+			expect "again:" { send "\n" }
+		}
+	}
+}
+
+expect eof
+exit 0
+
