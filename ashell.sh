@@ -5,7 +5,7 @@ exit 0
 ################################################################################
 VERSION="author: Yongfeng.Qi
 create: 2012-8-20 Yongfeng.Qi
-modify: 2012-8-22 Yongfeng.Qi"
+modify: 2012-8-27 Yongfeng.Qi"
 HELPS="使用说明：
         $0 [-h|-v]
 功能说明：
@@ -22,7 +22,7 @@ function func_usage  { echo "$HELPS"; exit 1; }
 
 ################################################################################
 LOGToStdO="yes"
-LOGFile=/cache/smp/tck_ifotd_log.${HOSTNAME}.log
+LOGFile=/cache/smp/FileName_log.${HOSTNAME}.log
 LOGMaxLine=100000
 LOGDelLine=2000
 
